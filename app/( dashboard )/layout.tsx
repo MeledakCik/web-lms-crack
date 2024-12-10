@@ -91,12 +91,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 { sender: "bot", text: parsedResponse },
             ]);
 
-        } catch (error) {
-            setMessages((prev) => [
-                ...prev,
-                { sender: "bot", text: "Terjadi kesalahan. Silakan coba lagi." },
-            ]);
-        } finally {
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                console.error(error.message);
+            } else {
+                console.error("An unknown error occurred.");
+            }
+        }
+        finally {
             setIsTyping(false);
             messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
         }
@@ -150,8 +152,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             <div
                                 key={index}
                                 className={`${msg.sender === "user"
-                                        ? "ml-auto bg-blue-500 text-white"
-                                        : "mr-auto bg-gray-200"
+                                    ? "ml-auto bg-blue-500 text-white"
+                                    : "mr-auto bg-gray-200"
                                     } p-2 rounded-lg max-w-[80%]`}
                                 dangerouslySetInnerHTML={{ __html: msg.text }}
                             />

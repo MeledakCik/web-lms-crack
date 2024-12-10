@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { LogOut, X } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import Image from "next/image";
 
 const Home = () => {
     const { toast } = useToast();
@@ -62,7 +63,7 @@ const Home = () => {
                                 key={index}
                                 className="rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-400"
                             >
-                                <img src={item.img} alt={item.title} className="rounded-lg mb-4 w-full h-40 object-cover" />
+                                <Image src={item.img} alt={item.title} width={200} height={200} className="rounded-lg mb-4 w-full h-40 object-cover" />
                                 <h3 className="text-lg font-bold mb-2">{item.title}</h3>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             </Card>
