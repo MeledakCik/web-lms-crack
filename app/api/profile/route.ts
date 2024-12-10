@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
+interface UserProfile {
+    username: string;
+    email: string;
+    name: string | null; // If nullable
+    photo_profile: string | null; // If nullable
+    bio: string | null; // If nullable
+}
+
 export async function GET(request: NextRequest) {
     try {
-        // Ambil userId dari query parameters
         const userId = request.nextUrl.searchParams.get("userId");
 
         if (!userId) {
@@ -25,8 +32,8 @@ export async function GET(request: NextRequest) {
                 u.id = ?;
         `;
 
-        const results: any = await new Promise((resolve, reject) => {
-            db.query(query, [userId], (error, results) => {
+        const results: UserProfile[] = await new Promise((resolve, reject) => {
+            db.query(query, [userId], (error, results: UserProfile[]) => {
                 if (error) return reject(error);
                 resolve(results);
             });
@@ -37,8 +44,11 @@ export async function GET(request: NextRequest) {
         } else {
             return NextResponse.json({ message: "No profile data found." }, { status: 404 });
         }
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("API Error:", error);
-        return NextResponse.json({ message: "Internal Server Error", error: error.message }, { status: 500 });
+        return NextResponse.json({ 
+            message: "Internal Server Error", 
+            error: error instanceof Error ? error.message : String(error) 
+        }, { status: 500 });
     }
 }

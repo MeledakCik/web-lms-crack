@@ -19,7 +19,7 @@ export default function Login() {
     const [registerPassword, setRegisterPassword] = useState("");
     const [message, setMessage] = useState("");
 
-    const validatePassword = (password: any) => {
+    const validatePassword = (password: string): string[] => {
         const errors = [];
         if (!/[A-Z]/.test(password)) errors.push("at least one uppercase letter");
         if (!/[a-z]/.test(password)) errors.push("at least one lowercase letter");
@@ -27,7 +27,7 @@ export default function Login() {
         if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) errors.push("at least one special character");
         if (password.length < 8) errors.push("minimum 8 characters");
         return errors;
-    };
+    };    
 
 
     const fileToBase64 = (file: File): Promise<string> => {
@@ -40,7 +40,7 @@ export default function Login() {
     };
     
 
-    const handleLogin = async (e: any) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setMessage("");
         try {
@@ -60,15 +60,15 @@ export default function Login() {
             localStorage.setItem("userId", data.id);
             document.cookie = `token=${data.token}; path=/`;
             route.push("/home");
-        } catch (error: any) {
-            setMessage(error.message);
+        } catch (error) {
+            setMessage((error as Error).message);
         }
-    };
+    };    
 
-    const handleRegister = async (e: any) => {
+    const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setMessage("");
-
+    
         const passwordErrors = validatePassword(registerPassword);
         if (passwordErrors.length > 0) {
             setMessage(`Password must contain ${passwordErrors.join(", ")}.`);
@@ -81,7 +81,6 @@ export default function Login() {
         }
     
         try {
-            // Konversi file ke Base64
             const base64Photo = await fileToBase64(registerPhotoProfile);
     
             const formData = new FormData();
@@ -103,10 +102,11 @@ export default function Login() {
             }
     
             setMessage("Registrasi berhasil! Anda sekarang dapat login.");
-        } catch (error: any) {
-            setMessage(error.message);
+        } catch (error) {
+            setMessage((error as Error).message);
         }
     };
+    
     
 
     return (

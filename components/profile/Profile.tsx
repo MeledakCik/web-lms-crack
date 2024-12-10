@@ -5,6 +5,7 @@ import { useToast } from "@/hooks/use-toast";
 import { LogOut, X, Plus } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 interface ProfileData {
     username: string;
     email: string;
@@ -12,6 +13,12 @@ interface ProfileData {
     photo_profile: string;
     bio: string;
 }
+
+const items: { title: string; img: string; data: keyof ProfileData }[] = [
+    { title: "Cek Username", img: "/profile.jpg", data: "username" },
+    { title: "Cek Email", img: "/cekprofile.png", data: "email" },
+    { title: "Cek Bio", img: "/kehadiran.png", data: "bio" },
+];
 
 const Profile = () => {
     const { toast } = useToast();
@@ -65,14 +72,14 @@ const Profile = () => {
 
             const data = await res.json();
             setProfile(data);
-        } catch (error: any) {
-            console.error("Gagal mengambil data profil:", error.message);
+        } catch (error) {
+            console.error("Gagal mengambil data profil:", error);
             setProfile({
-                username: "Error",
+                username: "Tidak Ada Username",
                 email: "N/A",
                 name: "N/A",
                 photo_profile: "",
-                bio: "Profile error",
+                bio: "Profile kosong",
             });
         }
     };
@@ -98,8 +105,10 @@ const Profile = () => {
                 <div className="flex justify-between ml-4 mr-4 rounded mt-3 items-center bg-white shadow p-2">
                     <div className="flex items-center space-x-4">
                         {profile.photo_profile ? (
-                            <img
+                            <Image
                                 src={profile.photo_profile}
+                                width={100}
+                                height={100}
                                 alt="Profile"
                                 className="w-16 h-16 rounded-full mx-auto object-cover shadow-lg"
                             />
@@ -116,21 +125,29 @@ const Profile = () => {
                 </div>
                 <div className="relative justify-center mt-4 ml-4 mr-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                        {[
-                            { title: "Cek Username", img: "/profile.jpg", data: "username" },
-                            { title: "Cek Email", img: "/cekprofile.png", data: "email" },
-                            { title: "Cek Bio", img: "/kehadiran.png", data: "bio" },
-                        ].map((item:any, index) => (
+                        {items.map((item, index) => (
                             <Card
                                 key={index}
                                 className="rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-400"
                             >
-                                <img src={item.img} alt={item.title} className="rounded-lg mb-4 w-full h-40 object-cover" />
+                                <Image
+                                    width={100}
+                                    height={100}
+                                    src={item.img}
+                                    alt={item.title}
+                                    className="rounded-lg mb-4 w-full h-40 object-cover"
+                                />
                                 <h3 className="text-lg font-bold mb-2">{item.title}</h3>
-                                <Button onClick={() => openModal(item.data)} className="bg-white text-gray-800 border-none shadow-none hover:bg-whtie"><Plus /> Lihat</Button>
+                                <Button
+                                    onClick={() => openModal(item.data)}
+                                    className="bg-white text-gray-800 border-none shadow-none hover:bg-white"
+                                >
+                                    <Plus /> Lihat
+                                </Button>
                             </Card>
                         ))}
                     </div>
+
                 </div>
             </div >
             {isModalOpen && modalContent && (
