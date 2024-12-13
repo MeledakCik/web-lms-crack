@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { Toaster } from "@/components/ui/toaster";
 import {
@@ -17,6 +17,8 @@ import {
     AiOutlineClear,
     AiOutlineX,
 } from "react-icons/ai";
+
+
 
 const excludedPaths = ["/login", "/forgotten"];
 
@@ -110,6 +112,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <SidebarProvider>
             <AppSidebar />
             <main className="bg-gray-200 w-full h-full">
+                <SidebarTrigger className="absolute" />
                 {isLoading ? (
                     <div className="flex justify-center items-center h-screen">
                         <div className="bg-white p-6 rounded-lg shadow-lg w-[300px]">

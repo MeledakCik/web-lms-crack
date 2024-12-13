@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { LogOut, X } from "lucide-react";
+import { LogOut, X, Plus } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
-
+import Link from "next/link";
 const Home = () => {
     const { toast } = useToast();
     const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -34,7 +34,7 @@ const Home = () => {
     const cancelLogout = () => setIsLogoutModalOpen(false);
 
     return (
-        <div className="h-full w-full justify-center items-center">
+        <div className="h-screen w-full justify-center items-center">
             <div className="flex justify-between ml-4 mr-4 rounded mt-3 items-center bg-white shadow p-4">
                 <h1 className="text-lg font-bold text-gray-800">Dashboard</h1>
                 <div className="flex items-center space-x-4">
@@ -45,28 +45,28 @@ const Home = () => {
             </div>
 
             <div className="flex-grow container mx-auto px-4 py-6 overflow-auto">
-                <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">Selamat Datang Di Web Lms Scraping</h2>
+                <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">Selamat Datang Di Web LMS Scraping</h2>
+
                 <div className="relative justify-center mt-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         {[
-                            { title: "Cek Profile", img: "/profile.jpg" },
-                            { title: "Edit Profile", img: "/cekprofile.png" },
-                            { title: "Cek Kehadiran", img: "/kehadiran.png" },
-                            { title: "Cek Kelas", img: "/kelas.jpeg" },
-                            { title: "Cek Report", img: "/report.png" },
-                            { title: "Change Password", img: "/change-password.svg" },
-                            { title: "Automatic Absen", img: "/absen.jpeg" },
-                            { title: "Crack User", img: "/users.png" },
-                            { title: "Crack File User", img: "/crack_file.jpg" },
-                        ].map((item, index) => (
-                            <Card
-                                key={index}
-                                className="rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-400"
-                            >
-                                <Image src={item.img} alt={item.title} width={200} height={200} className="rounded-lg mb-4 w-full h-40 object-cover" />
-                                <h3 className="text-lg font-bold mb-2">{item.title}</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </Card>
+                            { id: 1, title: "Ai Chat Gpt", img: "/profile.jpg" ,link: "/gemini"},
+                            { id: 2, title: "Ai Gemini", img: "/cekprofile.png",link: "/gpt" },
+                            { id: 3, title: "Ai Blackbox", img: "/kehadiran.png",link: "/blackbox" },
+                        ].map((item) => (
+                            <Link key={item.id} href={item.link}>
+                                <Card className="rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-400">
+                                    <Image
+                                        src={item.img}
+                                        alt={item.title}
+                                        width={200}
+                                        height={200}
+                                        className="rounded-lg mb-4 w-full h-40 object-cover"
+                                    />
+                                    <h3 className="text-lg font-bold mb-2">{item.title}</h3>
+                                    <p>Lorem ipsum dolor sit amet.</p>
+                                </Card>
+                            </Link>
                         ))}
                     </div>
                 </div>
