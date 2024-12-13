@@ -50,9 +50,9 @@ const Home = () => {
                 <div className="relative justify-center mt-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         {[
-                            { id: 1, title: "Ai Chat Gpt", img: "/profile.jpg" ,link: "/gemini"},
+                            { id: 1, title: "Ai Groq", img: "/profile.jpg" ,link: "/vercel"},
                             { id: 2, title: "Ai Gemini", img: "/cekprofile.png",link: "/gpt" },
-                            { id: 3, title: "Ai Blackbox", img: "/kehadiran.png",link: "/blackbox" },
+                            { id: 3, title: "Ai Llama 3.1", img: "/kehadiran.png",link: "/blackbox" },
                         ].map((item) => (
                             <Link key={item.id} href={item.link}>
                                 <Card className="rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-400">
