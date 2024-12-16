@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^1.0.5",
     "@ai-sdk/openai": "^1.0.8",
     "@google/generative-ai": "^0.21.0",
     "@prisma/client": "^6.0.1",
@@ -21,7 +22,7 @@
     "@radix-ui/react-tabs": "^1.1.1",
     "@radix-ui/react-toast": "^1.2.2",
     "@radix-ui/react-tooltip": "^1.1.4",
-    "ai": "^4.0.16",
+    "ai": "^4.0.18",
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "cheerio": "^1.0.0",
